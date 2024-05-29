@@ -1,57 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menu</title>
-  </head>
-  <body>
-    <!-- partials -->
-    <%- include('./partials/nav') %>
-    <!-- js variables and logic -->
-    <% let mains = [] %> <% let desserts = [] %> <% let sides = [] %>
-    <!-- push the category to appropriate array -->
-    <% menu.forEach(item => { %> <% if (item.category === 'desserts') { %> <%
-    desserts.push(item) %> <% } else if (item.category === 'mains') { %> <%
-    mains.push(item) %> <% } else if (item.category === 'sides') { %> <%
-    sides.push(item) %> <% } %> <% }) %>
-    <!-- function for displaying the menu -->
-    <% function displayMenus(arr){%>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu</title>
+</head>
+<body>
+  <!-- partials -->
+  <%- include('./partials/nav') %>
+  <!-- js variables and logic -->
+  <% let mains = [] %> 
+  <% let desserts = [] %> 
+  <% let sides = [] %>
+  <!-- push the category to appropriate array -->
+  <% menu.forEach(item => { %>
+    <% if (item.category === 'desserts') { %>
+      <% desserts.push(item) %>
+    <% } else if (item.category === 'mains') { %>
+      <% mains.push(item) %>
+    <% } else if (item.category === 'sides') { %>
+      <% sides.push(item) %>
+    <% } %> 
+  <% }) %>
+  <!-- function for displaying the menu -->
+  <% function displayMenus(arr) { %>
+    <!-- function for star rating -->
+    <% function printStars(rating) { %> 
+        <%= rating %>  ⭐️⭐️⭐️⭐️⭐️
+    <% } %> 
+    <% function printRating(rating) { %> 
+      <%= rating %> 
+    <% } %>
     <ul style="list-style: none">
       <% arr.forEach(item => { %>
-      <li
-        style="
-          margin: 15px 0;
-          border-bottom: solid 3px black;
-          padding-bottom: 4px;
-        "
-      >
-        <span>Name: <%= item.name %> </span><br />
-        <span>Price: <%= item.price %></span><br />
-        <span>Rating: <%= item.rating %> </span><br />
-        <span>Details: <%= item.details %> </span>
-      </li>
+        <li style="margin: 15px 0; border-bottom: solid 3px black; padding-bottom: 4px;">
+          <span>Name: <%= item.name %> </span><br />
+          <span>Price: <%= item.price %></span><br />
+          <span>
+            Rating: <% item.rating === 5 ? printStars(item.rating) : printRating(item.rating) %>
+          </span><br />
+          <span>Details: <%= item.details %> </span>
+        </li>
       <% }) %>
     </ul>
-    <% } %>
-    <!-- menues -->
-    <div id="full-menu">
-      <h1>Full Menu</h1>
-      <!-- mains -->
-      <div id="mains-menu">
-        <h2>Mains</h2>
-        <% displayMenus(mains) %>
-      </div>
-      <!-- sides -->
-      <div id="sides-menu">
-        <h2>Sides</h2>
-        <% displayMenus(sides) %>
-      </div>
-      <!-- desserts -->
-      <div id="desserts-menu">
-        <h2>Desserts</h2>
-        <% displayMenus(desserts) %>
-      </div>
+  <% } %>
+  <!-- menus -->
+  <div id="full-menu">
+    <h1>Full Menu</h1>
+    <!-- mains -->
+    <div id="mains-menu">
+      <h2>Mains</h2>
+      <% displayMenus(mains) %>
     </div>
-  </body>
+    <!-- sides -->
+    <div id="sides-menu">
+      <h2>Sides</h2>
+      <% displayMenus(sides) %>
+    </div>
+    <!-- desserts -->
+    <div id="desserts-menu">
+      <h2>Desserts</h2>
+      <% displayMenus(desserts) %>
+    </div>
+  </div>
+</body>
 </html>
